@@ -5,6 +5,7 @@
     },
     "activeFile": "LEVEL_01.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "LEVEL_01.tmx": {
@@ -14,8 +15,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 354.5,
-                "y": 311.5
+                "x": 353.5,
+                "y": 310.5
             }
         },
         "LEVEL_02.tmx": {
@@ -42,12 +43,14 @@
     "map.width": 40,
     "openFiles": [
         "terrain.tsx",
-        "LEVEL_01.tmx"
+        "LEVEL_01.tmx",
+        "LEVEL_02.tmx"
     ],
     "project": "pixel_adventure.tiled-project",
     "recentFiles": [
-        "LEVEL_01.tmx",
-        "terrain.tsx"
+        "terrain.tsx",
+        "LEVEL_02.tmx",
+        "LEVEL_01.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
