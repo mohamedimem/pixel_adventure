@@ -5,8 +5,8 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:pixel_adventure/actors/player.dart';
-import 'package:pixel_adventure/levels/level.dart';
+import 'package:pixel_adventure/components/player.dart';
+import 'package:pixel_adventure/components/level.dart';
 
 class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents {
   @override
@@ -55,9 +55,11 @@ class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents {
     switch (joystick.direction) {
       case JoystickDirection.left:
         playerFrog.playerDirection = PlayerDirection.left;
+        playerFrog.horizontalMovement = -1;
         break;
       case JoystickDirection.right:
         playerFrog.playerDirection = PlayerDirection.right;
+        playerFrog.horizontalMovement = 1;
         break;
       case JoystickDirection.up:
         break;
@@ -65,6 +67,7 @@ class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents {
         break;
       default:
         playerFrog.playerDirection = PlayerDirection.none;
+        playerFrog.horizontalMovement = 0;
     }
   }
 }

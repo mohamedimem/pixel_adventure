@@ -15,8 +15,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 353.5,
-                "y": 310.5
+                "x": 378.5,
+                "y": 184.5
             }
         },
         "LEVEL_02.tmx": {
@@ -26,8 +26,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 518.25,
-                "y": 258.75
+                "x": 319.75,
+                "y": 183.75
             }
         },
         "terrain.tsx": {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
+import 'package:pixel_adventure/components/collision_block.dart';
 
 enum PlayerState { idle, run, jump, attack, die }
 
@@ -25,9 +26,12 @@ class Player extends SpriteAnimationGroupComponent
   Vector2 velocity = Vector2.zero();
   PlayerDirection playerDirection = PlayerDirection.none;
   bool isFacingRight = true;
+  double horizontalMovement = 0.0;
+  List<CollisionBlock> collisionBlocks = [];
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimation();
+    debugMode = true;
     return super.onLoad();
   }
 
@@ -50,6 +54,7 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     _updatePlayerMovement(dt);
+    _updatePlayerState();
     super.update(dt);
   }
 
@@ -61,15 +66,8 @@ class Player extends SpriteAnimationGroupComponent
     final isRightKeyPressed =
         keysPressed.contains(LogicalKeyboardKey.arrowRight) ||
             keysPressed.contains(LogicalKeyboardKey.keyD);
-    if (isLeftKeyPressed && isRightKeyPressed) {
-      playerDirection = PlayerDirection.none;
-    } else if (isLeftKeyPressed) {
-      playerDirection = PlayerDirection.left;
-    } else if (isRightKeyPressed) {
-      playerDirection = PlayerDirection.right;
-    } else {
-      playerDirection = PlayerDirection.none;
-    }
+    horizontalMovement += isRightKeyPressed ? 1 : 0;
+    horizontalMovement -= isLeftKeyPressed ? 1 : 0;
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -86,33 +84,29 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   _updatePlayerMovement(double dt) {
-    double dirX = 0.0;
-    print(playerDirection);
-    switch (playerDirection) {
-      case PlayerDirection.left:
-        if (isFacingRight) {
-          isFacingRight = false;
-          flipHorizontallyAroundCenter();
-        }
-        current = PlayerState.run;
-        dirX -= moveSpeed;
+    velocity.x = horizontalMovement * moveSpeed;
+    position.x += velocity.x * dt;
+  }
 
-        break;
-      case PlayerDirection.right:
-        if (!isFacingRight) {
-          isFacingRight = true;
-          flipHorizontallyAroundCenter();
-        }
-        current = PlayerState.run;
+  void _updatePlayerState() {
+    PlayerState playerState = PlayerState.idle;
 
-        dirX += moveSpeed;
-        break;
-      case PlayerDirection.none:
-        current = PlayerState.idle;
-
-        break;
+    if (velocity.x < 0 && scale.x > 0) {
+      flipHorizontallyAroundCenter();
+    } else if (velocity.x > 0 && scale.x < 0) {
+      flipHorizontallyAroundCenter();
     }
-    velocity.x = dirX;
-    position += velocity * dt;
+
+    // Check if moving, set running
+    if (velocity.x > 0 || velocity.x < 0) playerState = PlayerState.run;
+
+    current = playerState;
+  }
+
+
+  _checkHorizontalCollisions(){
+    for (final block in collisionBlocks){
+      
+    }
   }
 }
